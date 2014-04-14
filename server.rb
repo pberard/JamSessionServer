@@ -11,7 +11,7 @@ configure do
 end
 
 get '/' do
-	"Hello World!"
+	"Hello " + params[:name] + "!"
 end
 
 get '/hello' do
