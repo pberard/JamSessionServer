@@ -1,6 +1,6 @@
 require 'sequel'
 
-DB = Sequel.connect(ENV['HEROKU_POSTGRESQL_GREEN_URL'] || 'sqlite://jamsessiondb.db')
+DB = Sequel.connect(ENV['HEROKU_POSTGRESQL_GOLD_URL'] || 'sqlite://jamsessiondb.db')
 
 DB.create_table? :users do
 	primary_key :id 
