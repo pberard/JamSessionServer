@@ -12,7 +12,7 @@ configure do
 end
 
 get '/' do
-	"Hello " + params[:name] + JSON.parse(params[:json])[:last] + "!"
+	"Hello " + params[:name] + " " + params[:last] + "!"
 end
 
 get '/hello' do
