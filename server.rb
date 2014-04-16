@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sequel'
 require 'sinatra/json'
+require 'json'
 
 #enable sessions in the server (this is not on by default)
 enable :sessions
