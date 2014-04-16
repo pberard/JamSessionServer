@@ -11,7 +11,7 @@ end
 
 DB.create_table? :songs do
 	primary_key :id
-	blob :music
+	String :dropbox_filepath
 	datetime :timestamp
 	int :length
 	String :description

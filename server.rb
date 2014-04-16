@@ -12,11 +12,11 @@ configure do
 end
 
 get '/' do
-	"Hello " + params[:name] + " " + params[:last] + "!"
+	"Hello World!"
 end
 
 get '/hello' do
-	"Hello World!"
+	"Hello " + params[:name] + " " + params[:last] + "!"
 end
 #################################################################################
 #################################   Users   #####################################
