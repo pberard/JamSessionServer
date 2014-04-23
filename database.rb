@@ -12,7 +12,6 @@ end
 DB.create_table? :songs do
 	primary_key :id
 	String :dropbox_filepath
-	datetime :timestamp
 	int :length
 	String :description
 	foreign_key :user_id, :users
