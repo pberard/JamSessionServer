@@ -22,17 +22,46 @@ end
 #################################   Users   #####################################
 #################################################################################
 get '/login' do
+	@error = ""
+	user = User[:email => params[:email], :password => params[:password]]
 
+	if (user.nil?)
+		#user doesn't exist or params were incorrect
+		@error = "Username or password was incorrect."
+	else
+		@error = "true"
+	end
 end
 
 get '/createAccount' do
-	json = JSON.parse params
-	
-	puts json["name"].to_s
+	#check uniqueness of username
+	@error = ""
+	user = User[:email => params[:email]]
 
-	#User.create(:name => json["name"],
-	#			:email => json["email"],
-	#			:password => json["password"])
+	if (user.nil?)
+		#doesnt exist, continue
+		if(params[:password1] == params[:password2])
+			if(params[:name] != "")
+					User.create(:name => params[:name],
+									:email => params[:email],
+									:password => params[:password1])
+			else 
+				@error = "Please enter a name"
+			end
+		else
+			@error = "Passwords don't match"
+		end
+	else
+		@error = "Email already registered for account.  Please enter different email."
+	end
+	if(@error != "")
+		#Success, return true
+		@error = "true"
+		@error
+	else
+		#return error
+		@error
+	end
 end
 
 get '/createFriendRequest' do
