@@ -9,6 +9,12 @@ DB.create_table? :users do
 	String :password
 end
 
+DB.create_table? :jams do
+	primary_key :id
+	int :ttl
+	foreign_key :user_id, :users
+end
+
 DB.create_table? :songs do
 	primary_key :id
 	String :dropbox_filepath
@@ -16,12 +22,6 @@ DB.create_table? :songs do
 	String :description
 	foreign_key :user_id, :users
 	foreign_key :jam_id, :jams
-end
-
-DB.create_table? :jams do
-	primary_key :id
-	int :ttl
-	foreign_key :user_id, :users
 end
 
 DB.create_table? :friends do
