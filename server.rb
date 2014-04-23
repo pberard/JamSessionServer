@@ -55,11 +55,11 @@ get '/createAccount' do
 		@error = "Email already registered for account.  Please enter different email."
 	end
 	if(@error != "")
-		#Success, return true
-		@error = "true"
+		#failure, return the error
 		@error
 	else
-		#return error
+		#return true
+		@error = "true"
 		@error
 	end
 end
