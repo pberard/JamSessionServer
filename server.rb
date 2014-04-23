@@ -23,14 +23,15 @@ end
 #################################################################################
 get '/login' do
 	@error = ""
-	user = User[:email => params[:email], :password => params[:password]]
+	user = User[:email => params[:email]]
 
-	if (user.nil?)
-		#user doesn't exist or params were incorrect
-		@error = "Username or password was incorrect."
+	if user.nil? or (user[:password] != params[:password])
+		@error = "Incorrect Username and/or Password"
 	else
 		@error = "true"
 	end
+	
+	@error
 end
 
 get '/createAccount' do
