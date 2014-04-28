@@ -86,9 +86,17 @@ get '/getFriendRequests' do
 end
 
 get '/allUsers' do 
+	jsonHash = {}
 	allUsers = User.all
+	allUsers.each do |user|
+		userHash = {:id => user.id
+					:email => user.email
+					:name => user.name}
+		jsonHash[user.name] = userHash
+	end
 	#json :allUsers => allUsers.to_json
-	allUsers.to_json
+	#allUsers.to_json
+	jsonHash.to_json
 end
 
 #################################################################################
