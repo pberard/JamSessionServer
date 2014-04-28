@@ -87,7 +87,7 @@ end
 
 get '/allUsers' do 
 	allUsers = User.all
-	json :allUsers => allUsers
+	json :allUsers => allUsers.to_json
 end
 
 #################################################################################
