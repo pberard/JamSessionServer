@@ -89,8 +89,8 @@ get '/allUsers' do
 	jsonHash = {}
 	allUsers = User.all
 	allUsers.each{ |user|
-		userHash = {:id => user.id
-					:email => user.email
+		userHash = {:id => user.id,
+					:email => user.email,
 					:name => user.name}
 		#convert user hash to json??!?!?!?!
 		jsonHash[user.name] = userHash
