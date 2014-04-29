@@ -12,7 +12,7 @@ configure do
 end
 
 get '/' do
-	logger.info "@@@@@@@@@@@@@@@@STARTING HELLO WORLD@@@@@@@@@"
+	logger.info "@@STARTING HELLO WORLD LOL@@"
 	"Hello World!"
 
 end
@@ -151,6 +151,8 @@ get '/createJam' do
 	collab = Collaboration.create(:user_id => params[:userID],
 								  :jam_id => jam.id)
 	#Upload song to Dropbox
+	logger.info("Song: " + params[:song].to_s)
+	logger.info("Tempfile: " + params[:song][:tempfile])
 	file =  params[:song][:tempfile]
 	filename = "/" + params[:filename]
 	response = @@dropbox_client.upload(filename, file)
