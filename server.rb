@@ -141,7 +141,7 @@ get '/getJam' do
 
 end
 
-get '/createJam' do
+post '/createJam' do
 	jsonHash = {}
 	#params = userID, ttl, song, filename
 	#Create Jam
