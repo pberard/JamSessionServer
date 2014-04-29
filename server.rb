@@ -32,7 +32,7 @@ get '/login' do
 	if (params[:email] == "") or user.nil? or (user[:password] != params[:password])
 		@error = "Incorrect Username and/or Password"
 	else
-		@error = "true"
+		@error = "true" + user.id
 	end
 	
 	@error
