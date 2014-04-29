@@ -33,10 +33,14 @@ get '/login' do
 	if (params[:email] == "") or user.nil? or (user[:password] != params[:password])
 		@error = "Incorrect Username and/or Password"
 		jsonHash["success"] = false
+		jsonHash["error"] = "Incorrect Username and/or Password"
+		jsonHash["userID"] = 0
+
 	else
 		jsonHash["success"] = true
 		jsonHash["userID"] = user.id
-		@error = "true" + user.id.to_s
+		jsonHash["error"] = ""
+
 	end
 	
 	#@error
@@ -52,7 +56,7 @@ get '/createAccount' do
 		#doesnt exist, continue
 		if(params[:password1] == params[:password2])
 			if(params[:name] != "")
-					User.create(:name => params[:name],
+					user = User.create(:name => params[:name],
 									:email => params[:email],
 									:password => params[:password1])
 			else 
@@ -66,11 +70,14 @@ get '/createAccount' do
 	end
 	if(@error != "")
 		#failure, return the error
-		@error
+		jsonHash["success"] = false
+		jsonHash["error"] = @error
+		jsonHash["userID"] = 0
 	else
 		#return true
-		@error = "true"
-		@error
+		jsonHash["success"] = true
+		jsonHash["userID"] = user.id
+		jsonHash["error"] = @error
 	end
 end
 
