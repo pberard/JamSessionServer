@@ -5,11 +5,12 @@ require 'json'
 
 #enable sessions in the server (this is not on by default)
 enable :sessions, :logging
+@@client
 
 #configure the app
 configure do
 	require_relative 'database.rb'
-	require_relative 'dropbox.rb'
+	require_relative './dropbox.rb'
 	@@client = Dropbox.new
 end
 
