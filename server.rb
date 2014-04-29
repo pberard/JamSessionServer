@@ -140,6 +140,8 @@ get '/getJam' do
 end
 
 get '/createJam' do
+	jsonHash = {}
+	#params = userID, ttl, song, filename
 	#Create Jam
 	jam = Jam.create(:user_id => params[:userID],
 	  				 :ttl => params[:ttl])
@@ -154,6 +156,9 @@ get '/createJam' do
     song = Song.create(:dropbox_filepath => filename,
     				  :user_id => params[:userID],
     				  :jam_id => jam.id)
+	jsonHash["success"] = true
+	jsonHash["jamID"] = jam.id
+	jsonHash.to_json
 end
 
 get '/updateJam' do
