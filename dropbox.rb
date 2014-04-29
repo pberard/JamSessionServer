@@ -2,9 +2,9 @@ require 'dropbox_sdk'
 
 class DropboxAPI
 	# Get your app key and secret from the Dropbox developer website
-	@access_token = '0ZS_nD1tgxkAAAAAAAAA4N4ahs7B9sTMn986OUcbPRfZl4ANlQ30AIzdKQ4u6WG2'
+	@@access_token = "0ZS_nD1tgxkAAAAAAAAA4N4ahs7B9sTMn986OUcbPRfZl4ANlQ30AIzdKQ4u6WG2"
 	def initialize
-		@client = DropboxClient.new(@access_token)
+		@client = DropboxClient.new(@@access_token)
 	end
 	def upload(name, file)
 		@client.put_file(name, file, true)
