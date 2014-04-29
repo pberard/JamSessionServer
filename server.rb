@@ -4,7 +4,7 @@ require 'sinatra/json'
 require 'json'
 
 #enable sessions in the server (this is not on by default)
-enable :sessions
+enable :sessions, :logging
 
 #configure the app
 configure do
@@ -12,7 +12,9 @@ configure do
 end
 
 get '/' do
+	logger.info "@@@@@@@@@@@@@@@@STARTING HELLO WORLD@@@@@@@@@"
 	"Hello World!"
+
 end
 
 get '/hello' do
