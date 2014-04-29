@@ -1,4 +1,4 @@
-require 'dropbox_sdk'
+require 'dropbox-sdk'
 
 # Get your app key and secret from the Dropbox developer website
 access_token = '0ZS_nD1tgxkAAAAAAAAA4N4ahs7B9sTMn986OUcbPRfZl4ANlQ30AIzdKQ4u6WG2'
