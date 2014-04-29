@@ -26,16 +26,21 @@ end
 #################################   Users   #####################################
 #################################################################################
 get '/login' do
+	jsonHash = {}
 	@error = ""
 	user = User[:email => params[:email]]
 
 	if (params[:email] == "") or user.nil? or (user[:password] != params[:password])
 		@error = "Incorrect Username and/or Password"
+		jsonHash["success"] = false
 	else
+		jsonHash["success"] = true
+		jsonHash["userID"] = user.id
 		@error = "true" + user.id.to_s
 	end
 	
-	@error
+	#@error
+	jsonHash.to_json
 end
 
 get '/createAccount' do
