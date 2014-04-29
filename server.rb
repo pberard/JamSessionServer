@@ -140,8 +140,26 @@ get '/getJam' do
 end
 
 get '/createJam' do
+	#Create Jam
+	jam = Jam.create(:user_id => params[:userID],
+	  				 :ttl => params[:ttl])
+	#Create Collaboration
+	collab = Collaboration.create(:user_id => params[:userID]
+								  :jam_id => jam.id)
+	#Upload song to Dropbox
+	file =  params[:song][:tempfile]
+	filename = "/" + params[:filename]
+	response = @@dropbox_client.upload(filename, file)
+	#Create song
+    song = Song.create(:dropbox_filepath => filename
+    				  :user_id => params[:userID]
+    				  :jam_id => jam.id)
+end
+
+get '/updateJam' do
 
 end
+
 
 get '/addCollaborator' do
 
