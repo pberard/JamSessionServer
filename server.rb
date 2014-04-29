@@ -10,6 +10,7 @@ enable :sessions, :logging
 configure do
 	require_relative 'database.rb'
 	require_relative 'dropbox.rb'
+	@@client = Dropbox.new
 end
 
 get '/' do
@@ -156,7 +157,8 @@ post '/createJam' do
 	logger.info("Tempfile: " + params[:song][:tempfile].to_s)
 	file =  params[:song][:tempfile]
 	filename = "/" + params[:filename]
-	response = dropbox_client.upload(filename, file)
+	
+	response = @@client.upload(filename, file)
 	#Create song
     song = Song.create(:dropbox_filepath => filename,
     				  :user_id => params[:userID],
