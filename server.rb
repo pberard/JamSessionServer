@@ -11,7 +11,7 @@ enable :sessions, :logging
 configure do
 	require_relative 'database.rb'
 	require_relative './dropbox.rb'
-	@@client = Dropbox.new
+	@@client = DropboxAPI.new
 end
 
 get '/' do
