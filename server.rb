@@ -152,7 +152,7 @@ post '/createJam' do
 								  :jam_id => jam.id)
 	#Upload song to Dropbox
 	logger.info("Song: " + params[:song].to_s)
-	logger.info("Tempfile: " + params[:song][:tempfile])
+	logger.info("Tempfile: " + params[:song][:tempfile].to_s)
 	file =  params[:song][:tempfile]
 	filename = "/" + params[:filename]
 	response = @@dropbox_client.upload(filename, file)
