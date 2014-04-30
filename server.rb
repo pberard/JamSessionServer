@@ -84,6 +84,7 @@ get '/createAccount' do
 		jsonHash["userID"] = user.id
 		jsonHash["error"] = @error
 	end
+	jsonHash.to_json
 end
 
 get '/createFriendRequest' do
