@@ -56,7 +56,7 @@ get '/createAccount' do
 	#check uniqueness of username
 	@error = ""
 	user = User[:email => params[:email]]
-
+	jsonHash = {}
 	if (user.nil?)
 		#doesnt exist, continue
 		if(params[:password1] == params[:password2])
