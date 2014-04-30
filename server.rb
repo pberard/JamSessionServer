@@ -106,7 +106,6 @@ end
 get '/allUsers' do 
 	jsonHash = {}
 	allUsers = User.all
-	allUsers.order(:name)
 	allUsers.each{ |user|
 		userHash = {:id => user.id,
 					:email => user.email,
