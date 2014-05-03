@@ -184,5 +184,25 @@ get '/addCollaboration' do
 end
 
 get '/getUpdates' do
-
+	
+	#SELECT jam.id
+	#FROM Jams
+	#WHERE jam.id IN
+	#(
+		#These are all of the jams you are collaborating on
+		#SELECT jam_id
+		#FROM collaborations
+		#WHERE user_id = params[:userID]
+	#)
+	#AND NOT IN
+	#(
+		#Filter out the jams you have already added to
+		#SELECT jam_id
+		#FROM Songs
+		#WHERE user_id = params[:userID]
+	#)
+	jsonHash = {}
+	jams = Jam.select(:id).where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).~(:id => Song.select(:jam_id).where(:user_id => params[:userID]))
+	jsonHash[:jams] = jams
+	jsonHash.to_json
 end
