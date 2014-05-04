@@ -202,7 +202,14 @@ get '/getUpdates' do
 		#WHERE user_id = params[:userID]
 	#)
 	jsonHash = {}
-	jams = Jam.select(:id).where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).~(:id => Song.select(:jam_id).where(:user_id => params[:userID]))
-	jsonHash[:jams] = jams
+	jams = Jam[:id => Jam.select(:id).where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID]))]
+	jams.each{ |jam|
+		jamHash = {:id => jam.id,
+					:user_id => jam.user_id,
+					:ttl => jam.ttl,
+					:user_name => User.select(:name).where(:id => jam.user_id)}
+		#convert user hash to json??!?!?!?!
+		jsonHash[jamHash.id] = jamHash
+	}
 	jsonHash.to_json
 end
