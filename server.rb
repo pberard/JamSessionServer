@@ -201,11 +201,11 @@ get '/getUpdates' do
 		#FROM Songs
 		#WHERE user_id = params[:userID]
 	#)
+	logger.info "Get Updates!"
 	jsonHash = {}
 	jams = Jam[:id => Jam.select(:id).where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID]))]
 	jams.each{ |jam|
-		logger.info "Get Updates!"
-		logger.info jam.to_s
+		logger.info "Jam: " + jam.to_s
 		jamHash = {:id => jam[:id],
 					:user_id => jam[:user_id],
 					:ttl => jam[:ttl],
