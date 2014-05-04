@@ -204,10 +204,12 @@ get '/getUpdates' do
 	jsonHash = {}
 	jams = Jam[:id => Jam.select(:id).where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID]))]
 	jams.each{ |jam|
-		jamHash = {:id => jam.id,
-					:user_id => jam.user_id,
-					:ttl => jam.ttl,
-					:user_name => User.select(:name).where(:id => jam.user_id)}
+		logger.info "Get Updates!"
+		logger.info jam.to_s
+		jamHash = {:id => jam[:id],
+					:user_id => jam[:user_id],
+					:ttl => jam[:ttl],
+					:user_name => User.select(:name).where(:id => jam[:user_id])}
 		#convert user hash to json??!?!?!?!
 		jsonHash[jamHash.id] = jamHash
 	}
