@@ -149,10 +149,10 @@ post '/createJam' do
 	jsonHash = {}
 	#params = userID, ttl, song, filename
 	#Create Jam
-	jam = Jam.create(:user_id => params[:userID],
-	  				 :ttl => params[:ttl])
+	jam = Jam.create(:user_id => params[:userID].to_i,
+	  				 :ttl => params[:ttl].to_i)
 	#Create Collaboration
-	collab = Collaboration.create(:user_id => params[:userID],
+	collab = Collaboration.create(:user_id => params[:userID].to_i,
 								  :jam_id => jam.id)
 	#Upload song to Dropbox
 	logger.info("Song: " + params[:song].to_s)
@@ -163,8 +163,10 @@ post '/createJam' do
 	response = @@client.upload(filename, file)
 	#Create song
     song = Song.create(:dropbox_filepath => filename,
-    				  :user_id => params[:userID],
+    				  :user_id => params[:userID].to_i,
     				  :jam_id => jam.id)
+    otherCollab = collab = Collaboration.create(:user_id => params[:collaboratorID].to_i,
+												:jam_id => jam.id)
 	jsonHash["success"] = true
 	jsonHash["jamID"] = jam.id
 	jsonHash.to_json
@@ -212,7 +214,6 @@ get '/getUpdates' do
 					:user_id => jam[:user_id],
 					:ttl => jam[:ttl],
 					:user_name => User.select(:name).where(:id => jam[:user_id])}
-		#convert user hash to json??!?!?!?!
 		jsonHash[jamHash.id] = jamHash
 	}
 	jsonHash.to_json
