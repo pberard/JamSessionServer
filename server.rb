@@ -212,7 +212,7 @@ get '/getUpdates' do
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i))
 	jams.each{ |jam|
 		logger.info "Jam: " + jam.to_s
-		logger.info "Jam Keys: " + jam.keys
+		logger.info "Jam Keys: " + jam.keys.to_s
 		#jamHash = {:id => jam[:id],
 		#			:user_id => jam[:user_id],
 		#			:ttl => jam[:ttl],
