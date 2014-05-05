@@ -203,6 +203,7 @@ get '/getUpdates' do
 	#)
 	logger.info "Get Updates!"
 	jsonHash = {}
+	logger.info "Params: " + params[:userID]
 	logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID])).sql
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID])).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID]))
 	jams.each{ |jam|
