@@ -205,22 +205,22 @@ get '/getUpdates' do
 		#FROM Songs
 		#WHERE user_id = params[:userID]
 	#)
-	logger.info "Get Updates!"
+	#logger.info "Get Updates!"
 	jsonHash = {}
-	logger.info "Params: " + params[:userID]
-	logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i)).sql
+	#logger.info "Params: " + params[:userID]
+	#logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i)).sql
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i))
 	jams.each{ |jam|
 
-		logger.info "Jam: " + jam.to_s
-		logger.info "Jam Keys: " + jam.keys.to_s
+		# logger.info "Jam: " + jam.to_s
+		# logger.info "Jam Keys: " + jam.keys.to_s
 		user = User[:id => params[:userID].to_i]
-		logger.info "Username: " + user[:name].to_s
-		# jamHash = {:id => jam[:id],
-		# 			:user_id => jam[:user_id],
-		# 			:ttl => jam[:ttl],
-		# 			:user_name => user[:name].to_s}
-		# jsonHash[jam[:id]] = jamHash
+		#logger.info "Username: " + user[:name].to_s
+		jamHash = {:id => jam[:id],
+					:user_id => jam[:user_id],
+					:ttl => jam[:ttl],
+					:user_name => user[:name].to_s}
+		jsonHash[jam[:id]] = jamHash
 	}
 	jsonHash.to_json
 end
