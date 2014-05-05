@@ -165,6 +165,8 @@ post '/createJam' do
     song = Song.create(:dropbox_filepath => filename,
     				  :user_id => params[:userID].to_i,
     				  :jam_id => jam.id)
+
+    #Create collaboration for other user
     otherCollab = collab = Collaboration.create(:user_id => params[:collaboratorID].to_i,
 												:jam_id => jam.id)
 	jsonHash["success"] = true
@@ -196,7 +198,7 @@ get '/getUpdates' do
 		#FROM collaborations
 		#WHERE user_id = params[:userID]
 	#)
-	#AND NOT IN
+	#AND jam.id NOT IN
 	#(
 		#Filter out the jams you have already added to
 		#SELECT jam_id
@@ -210,6 +212,7 @@ get '/getUpdates' do
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i))
 	jams.each{ |jam|
 		logger.info "Jam: " + jam.to_s
+		logger.info "Jam Keys: " + jam.keys
 		jamHash = {:id => jam[:id],
 					:user_id => jam[:user_id],
 					:ttl => jam[:ttl],
