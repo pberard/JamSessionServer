@@ -211,16 +211,18 @@ get '/getUpdates' do
 	logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i)).sql
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i))
 	jams.each{ |jam|
+
 		logger.info "Jam: " + jam.to_s
 		logger.info "Jam Keys: " + jam.keys.to_s
 		logger.info "ID: " + jam[:id].to_s
+		
 		user =  User.where(:id => params[:userID].to_i)
 		logger.info "Username: " + user[:name].to_s
-		jamHash = {:id => jam[:id],
-					:user_id => jam[:user_id],
-					:ttl => jam[:ttl],
-					:user_name => user[:name].to_s}
-		jsonHash[jam[:id]] = jamHash
+		# jamHash = {:id => jam[:id],
+		# 			:user_id => jam[:user_id],
+		# 			:ttl => jam[:ttl],
+		# 			:user_name => user[:name].to_s}
+		# jsonHash[jam[:id]] = jamHash
 	}
 	jsonHash.to_json
 end
