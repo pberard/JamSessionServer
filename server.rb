@@ -214,7 +214,7 @@ get '/getUpdates' do
 		logger.info "Jam: " + jam.to_s
 		logger.info "Jam Keys: " + jam.keys.to_s
 		logger.info "ID: " + jam[:id].to_s
-		user =  User.where(:id => jam[:user_id])
+		user =  User.where(:id => params[:userID].to_i)
 		logger.info "Username: " + user[:name].to_s
 		jamHash = {:id => jam[:id],
 					:user_id => jam[:user_id],
