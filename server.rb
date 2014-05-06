@@ -127,7 +127,8 @@ get '/getSongsForJam' do
 	jsonHash = {}
 	songs = Song.where(:jam_id => params[:jamID].to_i)
 	songs.each{ |song|
-		jsonHash[song[:id]] = song[:id]
+		songHash = {:id => song[:id],
+					:filename => song[:dropbox_filepath]}
 	# 	user = User[:id => song[:user_id]]
 	# 	#logger.info "User: " + user[:name]
 	# 	response = @@client.download(song[:dropbox_filepath])
@@ -138,7 +139,7 @@ get '/getSongsForJam' do
 	# 				:user => user[:name],
 	# 				:file_name => song[:dropbox_filepath],
 	# 				:mp3 => f.bytes.to_a} #and as of this moment, I hate ruby
-	# 	jsonHash[song[:id]] = songHash
+	 	jsonHash[song[:id]] = songHash
 	}
 	logger.info "Whats all this then?"
 	jsonHash.to_json
