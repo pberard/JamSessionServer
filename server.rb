@@ -122,7 +122,7 @@ end
 #################################   Songs   #####################################
 #################################################################################
 
-get '/getSong' do
+get '/getSongsForJam' do
 	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$" + params[:jamID].to_s
 	jsonHash = {}
 	songs = Song.where(:jam_id => params[:jamID].to_i)
@@ -137,9 +137,10 @@ get '/getSong' do
 		songHash = {:id => song[:id],
 					:user => user[:name],
 					:file_name => song[:dropbox_filepath],
-					:mp3 => f.bytes.to_a}
+					:mp3 => f.bytes.to_a} #and as of this moment, I hate ruby
 		jsonHash[song[:id]] = songHash
 	}
+	logger.info "Whats all this then?"
 	jsonHash.to_json
 end
 
