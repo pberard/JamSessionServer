@@ -127,7 +127,7 @@ get '/getSong' do
 	jsonHash = {}
 	songs = Song.where(:jam_id => params[:jamID])
 	songs.each{ |song|
-		logger.info song.to_s
+		logger.info song
 		user = User[:id => song[:user_id]]
 		logger.info "User: " + user[:name]
 		response = @@client.download(song[:dropbox_filepath])
