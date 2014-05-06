@@ -132,11 +132,12 @@ get '/getSong' do
 		#logger.info "User: " + user[:name]
 		response = @@client.download(song[:dropbox_filepath])
 		file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }
+		f = File.binread("#{settings.root}/tmp" + song[:dropbox_filepath])
 		#logger.info response.to_s
 		songHash = {:id => song[:id],
 					:user => user[:name],
 					:file_name => song[:dropbox_filepath],
-					:mp3 => file}
+					:mp3 => f}
 		jsonHash[song[:id]] = songHash
 	}
 	jsonHash.to_json
