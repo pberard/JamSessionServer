@@ -125,17 +125,20 @@ end
 get '/getSong' do
 	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$" + params[:jamID].to_s
 	jsonHash = {}
-	songs = Song.where(:jam_id => params[:jamID])
+	songs = Song.where(:jam_id => params[:jamID].to_i)
 	songs.each{ |song|
-		logger.info song
+		#logger.info song
 		user = User[:id => song[:user_id]]
-		logger.info "User: " + user[:name]
+		#logger.info "User: " + user[:name]
 		response = @@client.download(song[:dropbox_filepath])
-		logger.info response.to_s
-		#songHash = {:id => song.id,
-					#:user => user.name,
-					#:mp3 => }
+		#logger.info response.to_s
+		songHash = {:id => song[:id],
+					:user => user[:name],
+					:file_name => song[:dropbox_filepath],
+					:mp3 => response}
+		jsonHash[song[:id]] = songHash
 	}
+	jsonHash.to_json
 end
 
 
