@@ -137,7 +137,7 @@ get '/getSong' do
 		songHash = {:id => song[:id],
 					:user => user[:name],
 					:file_name => song[:dropbox_filepath],
-					:mp3 => f}
+					:mp3 => f.bytes.to_a}
 		jsonHash[song[:id]] = songHash
 	}
 	jsonHash.to_json
