@@ -199,7 +199,8 @@ post '/createJam' do
 end
 
 get '/updateJam' do
-jsonHash = {}
+	logger.info "&&&&& UPDATE JAM &&&&&"
+	jsonHash = {}
 	#params = userID, ttl, song, filename
 	#Create Jam
 	jam = Jam.where(:id => params[:jamID].to_i)
