@@ -198,7 +198,7 @@ post '/createJam' do
 	jsonHash.to_json
 end
 
-get '/updateJam' do
+post '/updateJam' do
 	logger.info "&&&&& UPDATE JAM &&&&&"
 	jsonHash = {}
 	#params = userID, ttl, song, filename
