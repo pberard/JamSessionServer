@@ -131,7 +131,7 @@ get '/getSong' do
 		user = User[:id => song[:user_id]]
 		#logger.info "User: " + user[:name]
 		response = @@client.download(song[:dropbox_filepath])
-		open(song[:dropbox_filepath], 'w') {|f| f.puts response }
+		file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }
 		#logger.info response.to_s
 		# songHash = {:id => song[:id],
 		# 			:user => user[:name],
