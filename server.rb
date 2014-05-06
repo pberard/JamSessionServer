@@ -123,27 +123,36 @@ end
 #################################################################################
 
 get '/getSongsForJam' do
-	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$" + params[:jamID].to_s
+	logger.info "$$$$$$$$$$$$  GET SONGZ  $$$$$$$$$$$$$" + params[:jamID].to_s
 	jsonHash = {}
 	songs = Song.where(:jam_id => params[:jamID].to_i)
 	songs.each{ |song|
-		#logger.info song
-		user = User[:id => song[:user_id]]
-		#logger.info "User: " + user[:name]
-		response = @@client.download(song[:dropbox_filepath])
-		file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }
-		f = File.binread("#{settings.root}/tmp" + song[:dropbox_filepath])
-		#logger.info response.to_s
-		songHash = {:id => song[:id],
-					:user => user[:name],
-					:file_name => song[:dropbox_filepath],
-					:mp3 => f.bytes.to_a} #and as of this moment, I hate ruby
-		jsonHash[song[:id]] = songHash
+		jsonHash[song[:id] => song[:id]]
+	# 	#logger.info song
+	# 	user = User[:id => song[:user_id]]
+	# 	#logger.info "User: " + user[:name]
+	# 	response = @@client.download(song[:dropbox_filepath])
+	# 	file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }
+	# 	f = File.binread("#{settings.root}/tmp" + song[:dropbox_filepath])
+	# 	#logger.info response.to_s
+	# 	songHash = {:id => song[:id],
+	# 				:user => user[:name],
+	# 				:file_name => song[:dropbox_filepath],
+	# 				:mp3 => f.bytes.to_a} #and as of this moment, I hate ruby
+	# 	jsonHash[song[:id]] = songHash
 	}
 	logger.info "Whats all this then?"
 	jsonHash.to_json
 end
 
+get '/getSong' do 
+	logger.info "~~~~ Getting song ~~~~"
+	song = Song[:id => params[:songID]]
+	response = @@client.download(song[:dropbox_filepath])
+	file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }	
+	filename = "#{settings.root}/tmp" + song[:dropbox_filepath]
+	send_file filename, :type => 'audio/mpeg', :disposition => 'attachment', :stream => false
+end
 
 
 get '/deleteSong' do
