@@ -123,10 +123,10 @@ end
 #################################################################################
 
 get '/getSong' do
-	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$"
+	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$" + params[:jamID].to_s
 	jsonHash = {}
-	songs = Song[:jam_id => params[:jamID]]
-	songs.each{|song|
+	songs = Song.where(:jam_id => params[:jamID])
+	songs.each{ |song|
 		logger.info song.to_s
 		user = User[:id => song[:user_id]]
 		logger.info "User: " + user[:name]
