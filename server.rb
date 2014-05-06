@@ -123,15 +123,21 @@ end
 #################################################################################
 
 get '/getSong' do
-	#Songs.where(id=blah, etc etc etc)
-	#a_jsoniffied_hash = {'id' => 1, 'mp3' => mp3serialized, etc}.to_json
+	logger.info "$$$$$$$$$$$$  GET SONG  $$$$$$$$$$$$$"
+	jsonHash = {}
+	songs = Song[:jam_id => params[:jamID]]
+	songs.each{|song|
+		user = User[:id => song.user_id]
+		logger.info "User: " + user.name
+		response = @@client.download(song.dropbox_filepath)
+		logger.info response.to_s
+		#songHash = {:id => song.id,
+					#:user => user.name,
+					#:mp3 => }
+	}
 end
 
-get '/createSong' do
-	JSON.parse params
-	#get song data
-	#insert song
-end
+
 
 get '/deleteSong' do
 
