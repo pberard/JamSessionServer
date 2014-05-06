@@ -147,7 +147,7 @@ end
 
 get '/getSong' do 
 	logger.info "~~~~ Getting song ~~~~"
-	song = Song[:id => params[:songID]]
+	song = Song[:id => params[:songID].to_i]
 	response = @@client.download(song[:dropbox_filepath])
 	file = open("#{settings.root}/tmp" + song[:dropbox_filepath], 'w') {|f| f.puts response }	
 	filename = "#{settings.root}/tmp" + song[:dropbox_filepath]
