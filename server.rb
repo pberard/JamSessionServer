@@ -202,11 +202,10 @@ post '/updateJam' do
 	logger.info "&&&&& UPDATE JAM &&&&&"
 	jsonHash = {}
 	#params = userID, ttl, song, filename
-	#Create Jam
-	jam = Jam.where(:id => params[:jamID].to_i)
+	#jam = Jam.where(:id => params[:jamID].to_i)
 	#Create Collaboration
 	collab = Collaboration.create(:user_id => params[:userID].to_i,
-								  :jam_id => jam[:id])
+								  :jam_id => params[:jamID].to_i)
 	#Upload song to Dropbox
 	logger.info("Song: " + params[:song].to_s)
 	logger.info("Tempfile: " + params[:song][:tempfile].to_s)
@@ -217,13 +216,13 @@ post '/updateJam' do
 	#Create song
     song = Song.create(:dropbox_filepath => filename,
     				  :user_id => params[:userID].to_i,
-    				  :jam_id => jam[:id])
+    				  :jam_id => params[:jamID].to_i)
 
     #Create collaboration for other user
     otherCollab = collab = Collaboration.create(:user_id => params[:collaboratorID].to_i,
-												:jam_id => jam[:id])
+												:jam_id => params[:jamID].to_i)
 	jsonHash["success"] = true
-	jsonHash["jamID"] = jam[:id]
+	jsonHash["jamID"] = params[:jamID].to_i
 	logger.info "Made it to the end " + jam[:id].to_s
 	jsonHash.to_json
 end
