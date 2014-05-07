@@ -223,7 +223,7 @@ post '/updateJam' do
 												:jam_id => params[:jamID].to_i)
 	jsonHash["success"] = true
 	jsonHash["jamID"] = params[:jamID].to_i
-	logger.info "Made it to the end " + jam[:id].to_s
+
 	jsonHash.to_json
 end
 
