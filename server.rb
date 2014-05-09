@@ -24,9 +24,6 @@ get '/hello' do
 	"Hello " + params[:name] + " " + params[:last] + "!"
 end
 
-get '/jsonTest' do 
-	json :foo => 'bar'
-end
 #################################################################################
 #################################   Users   #####################################
 #################################################################################
@@ -87,22 +84,6 @@ get '/createAccount' do
 	jsonHash.to_json
 end
 
-get '/createFriendRequest' do
-
-end
-
-get '/respondToFriendRequest' do
-
-end
-
-get '/getFriends' do
-
-end
-
-get '/getFriendRequests' do
-
-end
-
 get '/allUsers' do 
 	jsonHash = {}
 	allUsers = User.all
@@ -156,18 +137,9 @@ get '/getSong' do
 	send_file filename, :type => 'audio/mpeg', :disposition => 'attachment', :stream => false
 end
 
-
-get '/deleteSong' do
-
-end
-
 #################################################################################
 #################################    Jams    ####################################
 #################################################################################
-
-get '/getJam' do
-
-end
 
 post '/createJam' do
 	jsonHash = {}
@@ -259,6 +231,37 @@ get '/getUpdates' do
 	#logger.info "Params: " + params[:userID]
 	#logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i)).sql
 	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i))
+	jams.each{ |jam|
+
+		# logger.info "Jam: " + jam.to_s
+		# logger.info "Jam Keys: " + jam.keys.to_s
+		user = User[:id => params[:userID].to_i]
+		#logger.info "Username: " + user[:name].to_s
+		jamHash = {:id => jam[:id],
+					:user_id => jam[:user_id],
+					:ttl => jam[:ttl],
+					:user_name => user[:name].to_s}
+		jsonHash[jam[:id]] = jamHash
+	}
+	jsonHash.to_json
+end
+
+get '/getAllUpdates' do
+	
+	#SELECT jam.id
+	#FROM Jams
+	#WHERE jam.id IN
+	#(
+		#These are all of the jams you are collaborating on
+		#SELECT jam_id
+		#FROM collaborations
+		#WHERE user_id = params[:userID]
+	#)
+	#logger.info "Get Updates!"
+	jsonHash = {}
+	#logger.info "Params: " + params[:userID]
+	#logger.info "SQL:::" + Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i)).exclude(:id => Song.select(:jam_id).where(:user_id => params[:userID].to_i)).sql
+	jams = Jam.where(:id => Collaboration.select(:jam_id).where(:user_id => params[:userID].to_i))
 	jams.each{ |jam|
 
 		# logger.info "Jam: " + jam.to_s
