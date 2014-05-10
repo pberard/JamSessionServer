@@ -235,7 +235,7 @@ get '/getUpdates' do
 
 		# logger.info "Jam: " + jam.to_s
 		# logger.info "Jam Keys: " + jam.keys.to_s
-		user = User[:id => params[:userID].to_i]
+		user = User[:id => jam[:user_id]]
 		#logger.info "Username: " + user[:name].to_s
 		jamHash = {:id => jam[:id],
 					:user_id => jam[:user_id],
@@ -266,7 +266,7 @@ get '/getAllUpdates' do
 
 		# logger.info "Jam: " + jam.to_s
 		# logger.info "Jam Keys: " + jam.keys.to_s
-		user = User[:id => params[:userID].to_i]
+		user = User[:id => jam[:user_id]]
 		#logger.info "Username: " + user[:name].to_s
 		jamHash = {:id => jam[:id],
 					:user_id => jam[:user_id],
